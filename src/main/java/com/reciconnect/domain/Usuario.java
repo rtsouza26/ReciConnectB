@@ -1,18 +1,23 @@
 package com.reciconnect.domain;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
-@Table(name="usuario")
+@Table(name="TB_USUARIO")
 public class Usuario {
 	
 	
 	@Id
+	@NotNull
 	private String email;
 	@Column
+	@NotNull
 	private String nome;
 	@Column
+	@NotNull
 	private String senha;
 	@Column
+	@NotNull
 	private int avatar;
 	
 	

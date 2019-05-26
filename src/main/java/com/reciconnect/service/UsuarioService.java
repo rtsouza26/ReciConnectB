@@ -10,35 +10,44 @@ import com.reciconnect.domain.Usuario;
 
 @Service
 public class UsuarioService {
-	
-	private UsuarioDAO  usuarioDAO;
-	
+
+	private UsuarioDAO usuarioDAO;
+
 	@Autowired
-	public UsuarioService( UsuarioDAO usuarioDAO ) {
+	public UsuarioService(UsuarioDAO usuarioDAO) {
 		this.usuarioDAO = usuarioDAO;
-		
+
 	}
-	public boolean Create ( Usuario usuario) throws Exception{
-		if(usuario !=null) {
-			if(this.find(usuario.getEmail())) {
-				 this.usuarioDAO.save(usuario);
-				 return true;
-			}else {
-				throw new Exception("Ususário já existente");
-				
-			}
+
+	public Usuario create(Usuario usuario) throws Exception {
+
+		if (this.find(usuario.getEmail())) {
+			return this.usuarioDAO.save(usuario);
+
+		} else {
+			throw new Exception("Usuário já existente");
+
 		}
-		return false;
-		
-		
+
 	}
-	public boolean find( String email) {
+
+	public boolean find(String email) {
 		Optional<Usuario> usuario = this.usuarioDAO.findById(email);
-		
-		if(!usuario.isPresent()) {
+
+		if (!usuario.isPresent()) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
+	}
+
+	public Iterable<Usuario> readAll() {
+		return this.usuarioDAO.findAll();
+	}
+
+	public Usuario read(String email) {
+		Optional<Usuario> usuario = this.usuarioDAO.findById(email);
+
+		return usuario.get();
 	}
 }
